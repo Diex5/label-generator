@@ -1,0 +1,129 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+// Existující tabulky pro produkty, objednávky a varianty
+
+model Product {
+    id          Int         @id @default(autoincrement())
+    name        String
+    description String?
+    imageUrl    String?
+    variants    Variant[] // Jeden produkt může mít více variant
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
+    OrderItem   OrderItem[] // Jeden produkt může být v mnoha objednávkách
+}
+
+model Variant {
+    id        Int         @id @default(autoincrement())
+    name      String // Např. "Velikost", "Barva"
+    value     String // Např. "M", "L", "Červená", "Modrá"
+    price     Float // Cena varianty
+    productId Int // Cizí klíč pro Product
+    product   Product     @relation(fields: [productId], references: [id])
+    createdAt DateTime    @default(now())
+    updatedAt DateTime    @updatedAt
+    OrderItem OrderItem[] // Každá varianta může být součástí více objednávek
+}
+
+// Uživatelský model
+
+model User {
+    id             Int                   @id @default(autoincrement())
+    email          String                @unique
+    passwordHash   String
+    fullName       String?
+    createdAt      DateTime              @default(now())
+    updatedAt      DateTime              @updatedAt
+    orders         Order[] // Jeden uživatel může mít více objednávek
+    paymentMethods StripePaymentMethod[] // Záložka pro platební metody
+}
+
+// Tabulka objednávky, která bude propojena s platbami
+
+model Order {
+    id                    Int                     @id @default(autoincrement())
+    userId                Int // Foreign key for User
+    user                  User                    @relation(fields: [userId], references: [id])
+    totalPrice            Float // Total order price
+    status                String // Order status
+    createdAt             DateTime                @default(now())
+    updatedAt             DateTime                @updatedAt
+    items                 OrderItem[] // An order can have many items
+    paymentIntents        StripePaymentIntent[] // Mnoho platbových záznamů pro jednu objednávku
+    StripeCheckoutSession StripeCheckoutSession[] // Mnoho Checkout Sessions
+    StripeInvoice         StripeInvoice[] // Mnoho faktur
+}
+
+model OrderItem {
+    id         Int     @id @default(autoincrement())
+    orderId    Int // Cizí klíč pro Order
+    productId  Int // Cizí klíč pro Product
+    variantId  Int // Cizí klíč pro Variant
+    quantity   Int // Počet kusů
+    unitPrice  Float // Cena za kus (cena varianty)
+    totalPrice Float // Cena za tuto položku (unitPrice * quantity)
+    order      Order   @relation(fields: [orderId], references: [id])
+    product    Product @relation(fields: [productId], references: [id])
+    variant    Variant @relation(fields: [variantId], references: [id])
+}
+
+// Tabulka pro platby (Payment Intents)
+
+model StripePaymentIntent {
+    id           Int      @id @default(autoincrement())
+    orderId      Int // Foreign key for Order
+    status       String // Payment status
+    clientSecret String // Client secret for Stripe
+    amount       Float // Total payment amount
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+    order        Order    @relation(fields: [orderId], references: [id]) // Relace s objednávkou
+}
+
+// Tabulka pro platební metody Stripe
+
+model StripePaymentMethod {
+    id                    Int      @id @default(autoincrement())
+    userId                Int // Cizí klíč pro User
+    stripePaymentMethodId String // ID platební metody v Stripe
+    type                  String // Typ platební metody (např. "card", "bank_account")
+    cardLast4             String? // Poslední 4 číslice karty (pokud jde o platební kartu)
+    expMonth              Int? // Expirace měsíce karty
+    expYear               Int? // Expirace roku karty
+    createdAt             DateTime @default(now())
+    updatedAt             DateTime @updatedAt
+    user                  User     @relation(fields: [userId], references: [id])
+}
+
+// Tabulka pro Stripe Checkout Session (Pokud používáš Stripe Checkout)
+
+model StripeCheckoutSession {
+    id         Int      @id @default(autoincrement())
+    orderId    Int // Cizí klíč pro Order
+    sessionId  String // ID Checkout session v Stripe
+    paymentUrl String // URL pro platbu přes Stripe Checkout
+    status     String // Stav session (např. "open", "closed", "expired")
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @default(now())
+    order      Order    @relation(fields: [orderId], references: [id])
+}
+
+// Tabulka pro Stripe Invoice (Faktury)
+
+model StripeInvoice {
+    id        Int      @id @default(autoincrement())
+    orderId   Int // Cizí klíč pro Order
+    invoiceId String // ID faktury v Stripe
+    amount    Float // Celková částka faktury
+    status    String // Stav faktury (např. "paid", "unpaid")
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
+    order     Order    @relation(fields: [orderId], references: [id])
+}

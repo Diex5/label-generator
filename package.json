@@ -16,7 +16,8 @@
     "test:unit": "vitest",
     "cleanup": "nuxt cleanup && pnpm dedupe",
     "release:bump": "changelogen --bump",
-    "release": "npx changelogen --release --push"
+    "release": "npx changelogen --release --push",
+    "prisma-seed": "tsx prisma/seed.ts"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.4.0",
@@ -29,8 +30,10 @@
     "@nuxt/image": "^1.7.0",
     "@nuxt/test-utils": "^3.14.1",
     "@nuxtjs/color-mode": "^3.4.4",
+    "@nuxtjs/supabase": "^1.4.1",
     "@pinia/nuxt": "^0.5.4",
     "@primevue/nuxt-module": "^4.2.1",
+    "@prisma/client": "5.22.0",
     "@unocss/nuxt": "^0.62.3",
     "@vue/test-utils": "^2.4.6",
     "@vueuse/nuxt": "^11.0.3",
@@ -43,6 +46,7 @@
     "nuxt-radash": "^1.0.0",
     "pinia": "^2.2.2",
     "primeicons": "^7.0.0",
+    "prisma": "5.22.0",
     "simple-git-hooks": "^2.11.1",
     "taze": "^0.16.7",
     "typescript": "^5.5.4",
@@ -62,6 +66,7 @@
   },
   "dependencies": {
     "@primevue/themes": "^4.2.1",
+    "@prisma/nuxt": "^0.0.35",
     "primevue": "^4.2.1"
   }
 }

@@ -1,6 +1,14 @@
+<script setup lang="ts">
+const route = useRoute()
+
+useHead({
+  title: () => (route.meta.title as string) || '',
+  titleTemplate: title => (title ? `${title} - Configurator` : 'Configurator'),
+})
+</script>
+
 <template>
-  <div>
-    <NuxtRouteAnnouncer />
-    <NuxtWelcome />
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>

@@ -69,6 +69,8 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@primevue/nuxt-module',
     'nuxt-i18n-micro',
+    '@nuxtjs/supabase',
+    '@prisma/nuxt',
   ],
   primevue: {
     options: {
@@ -79,6 +81,9 @@ export default defineNuxtConfig({
         },
       },
     },
+  },
+  supabase: {
+    redirect: false,
   },
   i18n: {
     locales: [
