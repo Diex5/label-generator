@@ -71,19 +71,23 @@ export default defineNuxtConfig({
     'nuxt-i18n-micro',
     '@nuxtjs/supabase',
     '@prisma/nuxt',
+    'nuxt-headlessui',
   ],
   primevue: {
     options: {
       theme: {
         preset: primePreset,
         options: {
-          darkModeSelector: '.dark',
+          darkModeSelector: '.light',
         },
       },
     },
   },
   supabase: {
     redirect: false,
+  },
+  headlessui: {
+    prefix: 'Headless',
   },
   i18n: {
     locales: [
