@@ -7,6 +7,37 @@ import {
   presetWebFonts,
 } from 'unocss'
 
+export const themeColors = {
+  primary: {
+    50: '#e0f7f7', // Světlejší tyrkysová s jemně šedým nádechem
+    100: '#b3e6e6', // Světlejší tyrkysová s jemně šedým nádechem
+    200: '#80d3d3', // Světlejší tyrkysová s jemně šedým nádechem
+    300: '#4dc0c2', // Střední tyrkysová
+    400: '#26b3b3', // Střední tyrkysová
+    500: '#3ac9ba', // Hlavní tyrkysová
+    600: '#3ac9ba',
+    700: '#34b3a5',
+    800: '#2e9d90',
+    900: '#28867a',
+    950: '#227065',
+  },
+  surface: {
+    0: '#f3f4f6', // Jemně šedá, místo čisté bílé
+    50: '#f0f0f0', // Světle šedá
+    100: '#e0e0e0', // Tmavší šedá
+    200: '#d1d1d1', // Tmavší šedá
+    300: '#b2b2b2', // Tmavší šedá
+    400: '#9a9a9a', // Šedá
+    500: '#7f7f7f', // Střední šedá
+    600: '#666666', // Střední šedá
+    700: '#4c4c4c', // Tmavší šedá
+    800: '#333333', // Tmavá šedá
+    900: '#1a1a1a', // Velmi tmavá šedá
+    950: '#0d0d0d', // Tmavě šedá (ne úplně černá)
+  },
+
+}
+
 export default defineConfig({
   content: {
     filesystem: ['content/**'],
@@ -51,20 +82,11 @@ export default defineConfig({
   ],
   theme: {
     colors: {
-      app: {
-        primary: '#5e989e',
-        secondary: '#ae8b6d',
-        accent: {
-          primary: '#bafa03',
-          secondary: '#000000',
-        },
-        text: '#909090',
-        border: '#e0e0e0',
-        error: '#F53232',
-        grey: '#F8F8F8',
-        whiteGrey: '#F2F2F8',
-        darkGrey: '#C0C0C0',
-      },
+      ...themeColors,
+      gray: themeColors.surface,
+      white: themeColors.surface[0],
+      black: themeColors.surface[950],
+      indigo: themeColors.primary,
     },
     breakpoints: {
       'xs': '550px',

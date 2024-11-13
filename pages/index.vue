@@ -1,16 +1,23 @@
 <script setup lang=ts>
-const { isOpenedCard } = storeToRefs(useCart())
+const { isOpenedCart } = storeToRefs(useCart())
 const { toggleCart } = useCart()
 </script>
 
 <template>
-  <div>
-    {{ isOpenedCard }}
-    <ModalShoppingCart />
-    <Button
-      label="Open Carwt"
-
-      @click="toggleCart()"
-    />
+  <div
+    bg-white
+    w-full
+  >
+    <div h-100vh>
+      <HeroPage />
+      <HowItWorks />
+      <HeroProducts />
+      {{ isOpenedCart }}
+      <ModalShoppingCart />
+      <Button
+        label="Open Carwt"
+        @click="toggleCart()"
+      />
+    </div>
   </div>
 </template>

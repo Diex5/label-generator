@@ -23,17 +23,18 @@ const products = [
   },
   // More products...
 ]
-const { isOpenedCard } = storeToRefs(useCart())
+const { isOpenedCart } = storeToRefs(useCart())
+const { toggleCart } = useCart()
 </script>
 
 <template>
   <HeadlessTransitionRoot
     as="template"
-    :show="isOpenedCard"
+    :show="isOpenedCart"
   >
     <HeadlessDialog
       class="relative z-10"
-      @close="isOpenedCard = false"
+      @close="isOpenedCart = false"
     >
       <HeadlessTransitionChild
         as="template"
@@ -70,7 +71,7 @@ const { isOpenedCard } = storeToRefs(useCart())
                         <button
                           type="button"
                           class="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
-                          @click="isOpenedCard = false"
+                          @click="isOpenedCart = false"
                         >
                           <span class="absolute -inset-0.5" />
                           <span class="sr-only">Close panel</span>
@@ -145,22 +146,33 @@ const { isOpenedCard } = storeToRefs(useCart())
                       Shipping and taxes calculated at checkout.
                     </p>
                     <div class="mt-6">
-                      <a
-                        href="#"
-                        class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-                      >Checkout</a>
+                      <I18nLink to="#">
+                        <Button
+                          v-ripple
+                          w-full
+                          label="Zaplatit"
+                          size=""
+                        />
+                      </I18nLink>
                     </div>
-                    <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
-                      <p>
-                        or{{ ' ' }}
-                        <button
-                          type="button"
-                          class="font-medium text-indigo-600 hover:text-indigo-500"
-                          @click="open = false"
-                        >
-                          Continue Shopping
-                          <span aria-hidden="true"> &rarr;</span>
-                        </button>
+                    <div
+                      class="mt-6 flex justify-center text-center text-sm text-gray-500"
+                      w-full
+                    >
+                      <p
+                        w-full
+                        flex
+                        flex-col
+                        gap-4px
+                      >
+                        nebo{{ ' ' }}
+
+                        <Button
+                          label="Pokračovat v nákupu"
+                          variant="text"
+                          w-full
+                          @click="toggleCart()"
+                        />
                       </p>
                     </div>
                   </div>

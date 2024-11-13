@@ -1,54 +1,16 @@
 import { definePreset } from '@primevue/themes'
 import Aura from '@primevue/themes/aura'
+import { themeColors } from './unocss.config.js'
 
 const primePreset = definePreset(Aura, {
   semantic: {
-    primary: {
-      50: '#b9d1ff',
-      100: '#8bb3ff',
-      200: '#5d95ff',
-      300: '#2e76ff',
-      400: '#0058ff',
-      500: '#003CAE',
-      600: '#002f89',
-      700: '#002262',
-      800: '#00143b',
-      900: '#00143b',
-      950: '#00143b',
-    },
+    primary: themeColors.primary,
     colorScheme: {
       light: {
-        surface: {
-          0: '#ffffff',
-          50: '{slate.50}',
-          100: '{slate.100}',
-          200: '{slate.200}',
-          300: '{slate.300}',
-          400: '{slate.400}',
-          500: '{slate.500}',
-          600: '{slate.600}',
-          700: '{slate.700}',
-          800: '{slate.800}',
-          900: '{slate.900}',
-          950: '{slate.950}',
-        },
+        surface: themeColors.surface,
       },
       dark: {
-        surface: {
-          0: '#ffffff',
-          50: '{slate.50}',
-          100: '{slate.100}',
-          200: '{slate.200}',
-          300: '{slate.300}',
-          400: '{slate.400}',
-          500: '{slate.500}',
-          600: '{slate.600}',
-          700: '{slate.700}',
-          800: '{slate.800}',
-          900: '{slate.900}',
-          950: '{slate.950}',
-
-        },
+        surface: themeColors.surface,
       },
     },
   },
@@ -58,10 +20,10 @@ const primePreset = definePreset(Aura, {
 export default defineNuxtConfig({
   ssr: false,
   modules: [
+    '@unocss/nuxt',
     '@nuxt/test-utils/module',
     '@nuxt/eslint',
     '@vueuse/nuxt',
-    '@unocss/nuxt',
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
     '@nuxt/devtools',
@@ -75,6 +37,7 @@ export default defineNuxtConfig({
   ],
   primevue: {
     options: {
+      ripple: true,
       theme: {
         preset: primePreset,
         options: {
@@ -127,6 +90,7 @@ export default defineNuxtConfig({
   css: [
     '@unocss/reset/tailwind.css',
     'primeicons/primeicons.css',
+    '@/assets/styles/main.css',
 
   ],
   colorMode: {

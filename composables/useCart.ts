@@ -1,10 +1,10 @@
 import { useToggle } from '@vueuse/core'
 
 export const useCart = defineStore('cart', () => {
-  const [isOpenedCard, toggleCart] = useToggle()
+  const [isOpenedCart, toggleCart] = useToggle()
 
   return {
-    isOpenedCard,
+    isOpenedCart,
     toggleCart,
   }
 })
