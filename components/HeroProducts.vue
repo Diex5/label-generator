@@ -34,8 +34,21 @@
               :key="product.id"
               class="inline-flex w-64 flex-col text-center lg:w-auto"
             >
-              <div class="group relative">
-                <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200">
+              <div class="group relative group">
+                <div class="aspect-h-1 relative aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200">
+                  <div
+                    class="hidden group-hover:block"
+                    absolute
+                    top-0
+                    left-0
+                    z-10
+                    w-full
+                    h-full
+                  >
+                    <ClientOnly>
+                      <ModalProductQuickView />
+                    </ClientOnly>
+                  </div>
                   <img
                     :src="product.imageSrc"
                     :alt="product.imageAlt"
@@ -92,7 +105,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const products = [
   {
     id: 1,

@@ -20,9 +20,15 @@ importers:
       '@vueuse/core':
         specifier: ^11.2.0
         version: 11.2.0(vue@3.5.12(typescript@5.6.3))
+      konva:
+        specifier: ^9.3.16
+        version: 9.3.16
       primevue:
         specifier: ^4.2.1
         version: 4.2.1(vue@3.5.12(typescript@5.6.3))
+      vue-konva:
+        specifier: ^3.1.2
+        version: 3.1.2(konva@9.3.16)(vue@3.5.12(typescript@5.6.3))
     devDependencies:
       '@commitlint/cli':
         specifier: ^19.4.0
@@ -3466,6 +3472,9 @@ packages:
   kolorist@1.8.0:
     resolution: {integrity: sha512-Y+60/zizpJ3HRH8DCss+q95yr6145JXZo46OTpFvDZWLfRCE4qChOyk1b26nMaNpfHHgxagk9dXT5OP0Tfe+dQ==}
 
+  konva@9.3.16:
+    resolution: {integrity: sha512-qa47cefGDDHzkToGRGDsy24f/Njrz7EHP56jQ8mlDcjAPO7vkfTDeoBDIfmF7PZtpfzDdooafQmEUJMDU2F7FQ==}
+
   launch-editor@2.9.1:
     resolution: {integrity: sha512-Gcnl4Bd+hRO9P9icCP/RVVT2o8SFlPXofuCxvA2SaZuH45whSvf5p8x5oih5ftLiVhEI4sp5xDY+R+b3zJBh5w==}
 
@@ -5168,6 +5177,13 @@ packages:
     resolution: {integrity: sha512-JdgRRUVrN0Y2GosA0M68DEbKlXMqJ7FQgsK8CjQD2vxvNSqAU6PZEpi4cfcTVtfM2GVOMjHo7GKKLbXxOBqDqA==}
     peerDependencies:
       vue: ^3.4.37
+
+  vue-konva@3.1.2:
+    resolution: {integrity: sha512-/CyZSZjmKNED3Pt4XJFmAwv2PAYKBN1X/6AkYKIj+zSnJGnRZ17S+0Q+UzMgziyZ9Qg6yb25ol8XvkAJckHOCA==}
+    engines: {node: '>= 4.0.0', npm: '>= 3.0.0'}
+    peerDependencies:
+      konva: '>7'
+      vue: ^3
 
   vue-router@4.4.5:
     resolution: {integrity: sha512-4fKZygS8cH1yCyuabAXGUAsyi1b2/o/OKgu/RUb+znIYOxPRxdkytJEx+0wGcpBE1pX6vUgh5jwWOKRGvuA/7Q==}
@@ -9351,6 +9367,8 @@ snapshots:
 
   kolorist@1.8.0: {}
 
+  konva@9.3.16: {}
+
   launch-editor@2.9.1:
     dependencies:
       picocolors: 1.1.1
@@ -11372,6 +11390,11 @@ snapshots:
 
   vue-flow-layout@0.1.1(vue@3.5.12(typescript@5.6.3)):
     dependencies:
+      vue: 3.5.12(typescript@5.6.3)
+
+  vue-konva@3.1.2(konva@9.3.16)(vue@3.5.12(typescript@5.6.3)):
+    dependencies:
+      konva: 9.3.16
       vue: 3.5.12(typescript@5.6.3)
 
   vue-router@4.4.5(vue@3.5.12(typescript@5.6.3)):

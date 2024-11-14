@@ -8,6 +8,7 @@ const { toggleCart } = useCart()
     bg-white
     w-full
   >
+    <NavigationBar />
     <div h-100vh>
       <HeroPage />
       <HowItWorks />
