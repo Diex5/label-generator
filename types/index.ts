@@ -1,6 +1,5 @@
 // index.ts
 
-// Typy pro jednotlivé modely
 type Product = {
   id: number
   name: string

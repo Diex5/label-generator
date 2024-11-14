@@ -26,6 +26,9 @@ importers:
       primevue:
         specifier: ^4.2.1
         version: 4.2.1(vue@3.5.12(typescript@5.6.3))
+      superjson:
+        specifier: ^2.2.1
+        version: 2.2.1
       vue-konva:
         specifier: ^3.1.2
         version: 3.1.2(konva@9.3.16)(vue@3.5.12(typescript@5.6.3))
