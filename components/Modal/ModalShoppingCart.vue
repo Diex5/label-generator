@@ -1,5 +1,5 @@
 <script setup lang=ts>
-const { isOpenedCart, cartItems } = storeToRefs(useCart())
+const { isOpenedCart, cartItems, totalPrice } = storeToRefs(useCart())
 const { removeFromCart } = useCart()
 const { toggleCart } = useCart()
 </script>
@@ -46,7 +46,10 @@ const { toggleCart } = useCart()
 
                     <div class="mt-8">
                       <div class="flow-root">
-                        <ul v-auto-animate min-h-300px w-full role="list" class="-my-6 divide-y divide-gray-200">
+                        ` <transition-group
+                          name="list" tag="ul" min-h-300px w-full role="list"
+                          class="-my-6 divide-y divide-gray-200"
+                        >
                           <li v-for="cart in cartItems" :key="cart.id" class="flex py-6">
                             <div class="h-24 w-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
                               <img :src="cart.product.image" class="h-full w-full object-cover object-center">
@@ -82,7 +85,7 @@ const { toggleCart } = useCart()
                               </div>
                             </div>
                           </li>
-                        </ul>
+                        </transition-group>
                       </div>
                     </div>
                   </div>
@@ -90,7 +93,7 @@ const { toggleCart } = useCart()
                   <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
                     <div class="flex justify-between text-base font-medium text-gray-900">
                       <p>Subtotal</p>
-                      <p>$262.00</p>
+                      <p>{{ totalPrice }}</p>
                     </div>
                     <p class="mt-0.5 text-sm text-gray-500">
                       Shipping and taxes calculated at checkout.
@@ -117,3 +120,24 @@ const { toggleCart } = useCart()
     </HeadlessDialog>
   </HeadlessTransitionRoot>
 </template>
+
+<style scoped>
+.list-enter-active,
+.list-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+}
+
+.list-leave-active {
+  position: absolute;
+  width: 100%;
+}
+
+.list-move {
+  transition: transform 0.5s ease;
+}
+</style>
