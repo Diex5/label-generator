@@ -6,7 +6,7 @@ export const useCart = defineStore('cart', () => {
   const [isOpenedCart, toggleCart] = useToggle(false)
 
   // State
-  const cartItems = ref<OrderItem[]>([])
+  const cartItems = useLocalStorage<OrderItem[]>('cartItems', [])
 
   // Getters
   const totalQuantity = computed(() =>
@@ -22,10 +22,13 @@ export const useCart = defineStore('cart', () => {
     const existingItem = cartItems.value.find(
       item => item.productId === product.id && item.variantId === variant.id,
     )
-
+    if (!isProductAvailable(variant, quantity, existingItem?.quantity)) {
+      return window.alert('Produkt není dostupný v požadovaném množství.')
+    }
     if (existingItem) {
       existingItem.quantity += quantity
       existingItem.totalPrice += variant.price * quantity
+      console.log('Pocet kusu zvysen')
     }
     else {
       cartItems.value.push({
@@ -43,13 +46,26 @@ export const useCart = defineStore('cart', () => {
       toggleCart()
     }
   }
+  function isProductAvailable (variant: Variant, quantity: number, itemQty?: number): boolean {
+    // Kontrola, zda je produkt skladem
+    const isInStock = variant.quantity > 0
 
+    // Kontrola, zda požadované množství nepřesahuje dostupné množství varianty
+    const isQuantityValid = variant.quantity >= quantity
+
+    const existingQuantity = itemQty || 0
+
+    // Vrácení výsledku validace
+    return isInStock && isQuantityValid && (existingQuantity + quantity) <= variant.quantity
+  }
   const removeFromCart = (productId: number, variantId: number) => {
     cartItems.value = cartItems.value.filter(
       item => !(item.productId === productId && item.variantId === variantId),
     )
   }
-
+  const isAnyVariantInStock = computed(() =>
+    cartItems.value.some(item => item.variant.quantity > 0),
+  )
   const updateQuantity = (productId: number, variantId: number, quantity: number) => {
     const item = cartItems.value.find(
       item => item.productId === productId && item.variantId === variantId,
@@ -78,7 +94,7 @@ export const useCart = defineStore('cart', () => {
     // Getters
     totalQuantity,
     totalPrice,
-
+    isAnyVariantInStock,
     // Actions
     toggleCart,
     addToCart,

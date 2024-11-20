@@ -17,6 +17,7 @@ export type Variant = {
   value: string
   price: number
   productId: number
+  quantity: number | 0
   product: Product
   createdAt: Date
   updatedAt: Date

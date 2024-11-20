@@ -1,49 +1,16 @@
-<script setup>
-const products = [
-  {
-    id: 1,
-    name: 'Throwback Hip Bag',
-    href: '#',
-    color: 'Salmon',
-    price: '$90.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-    imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-  },
-  {
-    id: 2,
-    name: 'Medium Stuff Satchel',
-    href: '#',
-    color: 'Blue',
-    price: '$32.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-    imageAlt:
-      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-  },
-  // More products...
-]
-const { isOpenedCart } = storeToRefs(useCart())
+<script setup lang=ts>
+const { isOpenedCart, cartItems } = storeToRefs(useCart())
+const { removeFromCart } = useCart()
 const { toggleCart } = useCart()
 </script>
 
 <template>
-  <HeadlessTransitionRoot
-    as="template"
-    :show="isOpenedCart"
-  >
-    <HeadlessDialog
-      class="relative z-10"
-      @close="isOpenedCart = false"
-    >
+  <!-- TODO animace kosiku pri vstupu neni -->
+  <HeadlessTransitionRoot as="template" :show="isOpenedCart">
+    <HeadlessDialog class="relative z-10" @close="isOpenedCart = false">
       <HeadlessTransitionChild
-        as="template"
-        enter="ease-in-out duration-500"
-        enter-from="opacity-0"
-        enter-to="opacity-100"
-        leave="ease-in-out duration-500"
-        leave-from="opacity-100"
-        leave-to="opacity-0"
+        as="template" enter="ease-in-out duration-500" enter-from="opacity-0"
+        enter-to="opacity-100" leave="ease-in-out duration-500" leave-from="opacity-100" leave-to="opacity-0"
       >
         <div class="fixed inset-0 bg-gray-500 bg-opacity-75 HeadlessTransition-opacity" />
       </HeadlessTransitionChild>
@@ -54,10 +21,8 @@ const { toggleCart } = useCart()
             <HeadlessTransitionChild
               as="template"
               enter="transform HeadlessTransition ease-in-out duration-500 sm:duration-700"
-              enter-from="translate-x-full"
-              enter-to="translate-x-0"
-              leave="transform HeadlessTransition ease-in-out duration-500 sm:duration-700"
-              leave-from="translate-x-0"
+              enter-from="translate-x-full" enter-to="translate-x-0"
+              leave="transform HeadlessTransition ease-in-out duration-500 sm:duration-700" leave-from="translate-x-0"
               leave-to="translate-x-full"
             >
               <HeadlessDialogPanel class="pointer-events-auto w-screen max-w-md">
@@ -69,62 +34,47 @@ const { toggleCart } = useCart()
                       </HeadlessDialogTitle>
                       <div class="ml-3 flex h-7 items-center">
                         <button
-                          type="button"
-                          class="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
+                          type="button" class="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
                           @click="isOpenedCart = false"
                         >
                           <span class="absolute -inset-0.5" />
                           <span class="sr-only">Close panel</span>
-                          <UnoIcon
-                            class="pi pi-times h-6 w-6"
-                            aria-hidden="true"
-                          />
+                          <UnoIcon class="pi pi-times h-6 w-6" aria-hidden="true" />
                         </button>
                       </div>
                     </div>
 
                     <div class="mt-8">
                       <div class="flow-root">
-                        <ul
-                          role="list"
-                          class="-my-6 divide-y divide-gray-200"
-                        >
-                          <li
-                            v-for="product in products"
-                            :key="product.id"
-                            class="flex py-6"
-                          >
+                        <ul v-auto-animate min-h-300px w-full role="list" class="-my-6 divide-y divide-gray-200">
+                          <li v-for="cart in cartItems" :key="cart.id" class="flex py-6">
                             <div class="h-24 w-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
-                              <img
-                                :src="product.imageSrc"
-                                :alt="product.imageAlt"
-                                class="h-full w-full object-cover object-center"
-                              >
+                              <img :src="cart.product.image" class="h-full w-full object-cover object-center">
                             </div>
 
                             <div class="ml-4 flex flex-1 flex-col">
                               <div>
                                 <div class="flex justify-between text-base font-medium text-gray-900">
                                   <h3>
-                                    <a :href="product.href">{{ product.name }}</a>
+                                    <a :href="cart.product.slug">{{ cart.product.name }}</a>
                                   </h3>
                                   <p class="ml-4">
-                                    {{ product.price }}
+                                    {{ cart.variant.price }}
                                   </p>
                                 </div>
                                 <p class="mt-1 text-sm text-gray-500">
-                                  {{ product.color }}
+                                  {{ cart.variant.name }}
                                 </p>
                               </div>
                               <div class="flex flex-1 items-end justify-between text-sm">
                                 <p class="text-gray-500">
-                                  Qty {{ product.quantity }}
+                                  Qty {{ cart.quantity }}
                                 </p>
 
                                 <div class="flex">
                                   <button
-                                    type="button"
-                                    class="font-medium text-indigo-600 hover:text-indigo-500"
+                                    type="button" class="font-medium text-indigo-600 hover:text-indigo-500"
+                                    @click="removeFromCart(cart.productId, cart.variantId)"
                                   >
                                     Remove
                                   </button>
@@ -147,32 +97,14 @@ const { toggleCart } = useCart()
                     </p>
                     <div class="mt-6">
                       <I18nLink to="#">
-                        <Button
-                          v-ripple
-                          w-full
-                          label="Zaplatit"
-                          size=""
-                        />
+                        <Button v-ripple w-full label="Zaplatit" size="" />
                       </I18nLink>
                     </div>
-                    <div
-                      class="mt-6 flex justify-center text-center text-sm text-gray-500"
-                      w-full
-                    >
-                      <p
-                        w-full
-                        flex
-                        flex-col
-                        gap-4px
-                      >
+                    <div class="mt-6 flex justify-center text-center text-sm text-gray-500" w-full>
+                      <p w-full flex flex-col gap-4px>
                         nebo{{ ' ' }}
 
-                        <Button
-                          label="Pokračovat v nákupu"
-                          variant="text"
-                          w-full
-                          @click="toggleCart()"
-                        />
+                        <Button label="Pokračovat v nákupu" variant="text" w-full @click="toggleCart()" />
                       </p>
                     </div>
                   </div>

@@ -27,6 +27,7 @@ model Variant {
     name      String // Např. "Velikost", "Barva"
     value     String // Např. "M", "L", "Červená", "Modrá"
     price     Float // Cena varianty
+    quantity  Int         @default(0) // Dostupné množství
     productId Int // Cizí klíč pro Product
     product   Product     @relation(fields: [productId], references: [id])
     createdAt DateTime    @default(now())
