@@ -1,8 +1,6 @@
 <script setup lang=ts>
-import type { Product } from '@/types'
-
-const { isOpenedCart } = storeToRefs(useCart())
-const { toggleCart } = useCart()
+const { isOpenedCart, totalQuantity } = storeToRefs(useCart())
+const { toggleCart, addToCart } = useCart()
 const { products, isLoading } = storeToRefs(useProductStore())
 const { fetchProducts } = useProductStore()
 
@@ -17,8 +15,20 @@ onMounted(() => {
     w-full
   >
     <NavigationBar />
-    {{ products }}
     <div h-100vh>
+      <div v-if="!isLoading" flex gap-1rem items-center>
+        <div v-for="item in products" :key="item.id" class="w-full bg-red-200 p-4">
+          <h2 class="text-lg font-bold">
+            {{ item.name }}
+          </h2>
+
+          <div v-for="variant in item.variants" :key="variant.id" flex gap-1rem class="mt-2">
+            <Button label="Přidat do košíku" @click="addToCart(item, variant)" />
+
+            <p>Variant: {{ variant.name }} - {{ variant.value }} ({{ variant.price }} Kč)</p>
+          </div>
+        </div>
+      </div>
       <HeroPage />
       <HowItWorks />
       <HeroProducts />

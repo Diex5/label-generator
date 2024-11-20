@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-async function main() {
+async function main () {
   // Vytvoření produktů (triček) s variantami (velikosti, barvy)
 
   // Basic Tričko
@@ -11,6 +11,7 @@ async function main() {
       name: 'Basic Tričko',
       description: 'Klasické bavlněné tričko pro každodenní nošení.',
       imageUrl: 'https://placehold.co/600x400', // Placeholder image
+      slug: 'basic-tricko', // Hardcoded slug
       variants: {
         create: [
           { name: 'Velikost', value: 'S', price: 299.99 },
@@ -30,6 +31,7 @@ async function main() {
       name: 'Graphic Tričko',
       description: 'Tričko s grafickým potiskem pro moderní vzhled.',
       imageUrl: 'https://placehold.co/600x400', // Placeholder image
+      slug: 'graphic-tricko', // Hardcoded slug
       variants: {
         create: [
           { name: 'Velikost', value: 'M', price: 349.99 },
@@ -47,6 +49,7 @@ async function main() {
       name: 'Sportovní Tričko',
       description: 'Tričko ideální pro sportovní aktivity, vyrobené z prodyšného materiálu.',
       imageUrl: 'https://placehold.co/600x400', // Placeholder image
+      slug: 'sportovni-tricko', // Hardcoded slug
       variants: {
         create: [
           { name: 'Velikost', value: 'M', price: 399.99 },
@@ -62,7 +65,7 @@ async function main() {
 }
 
 main()
-  .catch((e) => {
+  .catch(e => {
     console.error(e)
     process.exit(1)
   })

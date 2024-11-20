@@ -50,6 +50,7 @@
     "prisma": "5.22.0",
     "simple-git-hooks": "^2.11.1",
     "taze": "^0.16.7",
+    "tsx": "^4.19.2",
     "typescript": "^5.5.4",
     "unocss": "^0.64.0",
     "viem": "^2.21.39",

@@ -1,6 +1,6 @@
 // index.ts
 
-type Product = {
+export type Product = {
   id: number
   name: string
   description: string | null
@@ -11,7 +11,7 @@ type Product = {
   OrderItem: OrderItem[]
 }
 
-type Variant = {
+export type Variant = {
   id: number
   name: string
   value: string
@@ -23,7 +23,7 @@ type Variant = {
   OrderItem: OrderItem[]
 }
 
-type User = {
+export type User = {
   id: number
   email: string
   passwordHash: string
@@ -34,7 +34,7 @@ type User = {
   paymentMethods: StripePaymentMethod[]
 }
 
-type Order = {
+export type Order = {
   id: number
   userId: number
   user: User
@@ -48,7 +48,7 @@ type Order = {
   StripeInvoice: StripeInvoice[]
 }
 
-type OrderItem = {
+export type OrderItem = {
   id: number
   orderId: number
   productId: number
@@ -56,12 +56,12 @@ type OrderItem = {
   quantity: number
   unitPrice: number
   totalPrice: number
-  order: Order
+  order?: Order | null
   product: Product
   variant: Variant
 }
 
-type StripePaymentIntent = {
+export type StripePaymentIntent = {
   id: number
   orderId: number
   status: string
@@ -72,7 +72,7 @@ type StripePaymentIntent = {
   order: Order
 }
 
-type StripePaymentMethod = {
+export type StripePaymentMethod = {
   id: number
   userId: number
   stripePaymentMethodId: string
@@ -85,7 +85,7 @@ type StripePaymentMethod = {
   user: User
 }
 
-type StripeCheckoutSession = {
+export type StripeCheckoutSession = {
   id: number
   orderId: number
   sessionId: string
@@ -96,7 +96,7 @@ type StripeCheckoutSession = {
   order: Order
 }
 
-type StripeInvoice = {
+export type StripeInvoice = {
   id: number
   orderId: number
   invoiceId: string
@@ -108,14 +108,3 @@ type StripeInvoice = {
 }
 
 // Exportuj všechny typy
-export {
-  Product,
-  Variant,
-  User,
-  Order,
-  OrderItem,
-  StripePaymentIntent,
-  StripePaymentMethod,
-  StripeCheckoutSession,
-  StripeInvoice,
-}

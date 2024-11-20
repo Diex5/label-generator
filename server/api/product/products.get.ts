@@ -8,7 +8,7 @@ export default defineEventHandler(async event => {
         variants: true,
       },
     })
-    return JSON.stringify(products, null, 2)
+    return products as unknown as Product[]
   }
   catch (e) {
     console.error(e)
