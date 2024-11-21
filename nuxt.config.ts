@@ -52,6 +52,9 @@ export default defineNuxtConfig({
   headlessui: {
     prefix: 'Headless',
   },
+  prisma: {
+    installStudio: false, // <-- this
+  },
   i18n: {
     locales: [
       { name: 'EN', code: 'en', iso: 'en-US', dir: 'ltr' },

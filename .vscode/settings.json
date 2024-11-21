@@ -1,0 +1,17 @@
+{
+  "prettier.enable": false,
+  "eslint.useFlatConfig": true,
+  "eslint.experimental.useFlatConfig": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  },
+  "files.associations": {
+    "*.css": "postcss"
+  },
+  "editor.formatOnSave": false,
+  "css.validate": false,
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#876FE8",
+    "statusBar.foreground": "#fff"
+  }
+}

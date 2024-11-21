@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 const { toggleCart } = useCart()
+const { totalQuantity } = storeToRefs(useCart())
 
 const items = ref([
   {
@@ -61,11 +62,16 @@ const items = ref([
           <NuxtImg src="https://placehold.co/50x50" w-10 h-10 rounded-full />
         </template>
         <template #item="{ item }">
-          <a v-if="item.root" class="flex items-center cursor-pointer px-4 py-2 overflow-hidden relative font-semibold text-lg ">
+          <a
+            v-if="item.root"
+            class="flex items-center cursor-pointer px-4 py-2 overflow-hidden relative font-semibold text-lg "
+          >
             <span>{{ item.label }}</span>
           </a>
           <a v-else-if="!item.image" class="flex items-center md:p-4 cursor-pointer mb-2 gap-3">
-            <span class="inline-flex items-center justify-center rounded-full bg-primary text-primary-contrast w-12 h-12">
+            <span
+              class="inline-flex items-center justify-center rounded-full bg-primary text-primary-contrast w-12 h-12"
+            >
               <i :class="[item.icon, 'text-lg']" />
             </span>
             <span class="inline-flex flex-col gap-1">
@@ -83,8 +89,11 @@ const items = ref([
           <div flex items-center gap-0.5rem>
             <Avatar image="https://placehold.co/50x50" shape="circle" />
 
-            <OverlayBadge value="4" severity="info">
-              <Button icon="pi pi-shopping-cart" class="py-1!" severity="secondary" relative size="large" variant="text" @click="toggleCart()" />
+            <OverlayBadge :value="totalQuantity ?? ''" severity="info">
+              <Button
+                icon="pi pi-shopping-cart" class="py-1!" severity="secondary" relative size="large" variant="text"
+                @click="toggleCart()"
+              />
             </OverlayBadge>
           </div>
         </template>
@@ -94,7 +103,7 @@ const items = ref([
 </template>
 
 <style>
-.pi-shopping-cart{
-  font-size:1.6rem !important
+.pi-shopping-cart {
+  font-size: 1.6rem !important
 }
 </style>

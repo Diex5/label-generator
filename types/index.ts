@@ -3,6 +3,7 @@
 export type Product = {
   id: number
   name: string
+  slug: string
   description: string | null
   imageUrl: string | null
   variants: Variant[]

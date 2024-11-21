@@ -46,13 +46,10 @@ const { toggleCart } = useCart()
 
                     <div class="mt-8">
                       <div class="flow-root">
-                        ` <transition-group
-                          name="list" tag="ul" min-h-300px w-full role="list"
-                          class="-my-6 divide-y divide-gray-200"
-                        >
+                        <transition-group name="list" tag="ul" min-h-300px w-full role="list" class="-my-6 divide-y divide-gray-200">
                           <li v-for="cart in cartItems" :key="cart.id" class="flex py-6">
                             <div class="h-24 w-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
-                              <img :src="cart.product.image" class="h-full w-full object-cover object-center">
+                              <NuxtImg :src="cart.product.imageUrl ?? ''" class="h-full w-full object-cover object-center" />
                             </div>
 
                             <div class="ml-4 flex flex-1 flex-col">
@@ -66,7 +63,7 @@ const { toggleCart } = useCart()
                                   </p>
                                 </div>
                                 <p class="mt-1 text-sm text-gray-500">
-                                  {{ cart.variant.name }}
+                                  {{ cart.variant.name }} {{ cart.variant.value }}
                                 </p>
                               </div>
                               <div class="flex flex-1 items-end justify-between text-sm">
@@ -100,7 +97,7 @@ const { toggleCart } = useCart()
                     </p>
                     <div class="mt-6">
                       <I18nLink to="#">
-                        <Button v-ripple w-full label="Zaplatit" size="" />
+                        <Button v-ripple w-full label="Zaplatit" size="large" />
                       </I18nLink>
                     </div>
                     <div class="mt-6 flex justify-center text-center text-sm text-gray-500" w-full>
