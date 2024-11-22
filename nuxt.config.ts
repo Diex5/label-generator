@@ -27,13 +27,14 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
     '@nuxt/devtools',
+    'nuxt-headlessui',
     'nuxt-radash',
     '@nuxt/image',
     '@primevue/nuxt-module',
     'nuxt-i18n-micro',
     '@nuxtjs/supabase',
     '@prisma/nuxt',
-    'nuxt-headlessui',
+
   ],
   primevue: {
     options: {
